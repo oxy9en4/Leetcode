@@ -1,29 +1,49 @@
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        unordered_map<int, int> umap;
-        int n = nums.size();
-        for (int i = 0; i < n; ++i){
-            int complement = target - nums[i];
-            if (umap.count(complement) == 1) return { umap[complement], i };
-            umap[nums[i]] = i;
-            
+        unordered_map<int, int> uMap;
+        int sub;
+
+        // find while mapping with Hash ///////////////
+        for (int i = 0; i < nums.size(); ++i)
+        {
+            sub = target - nums[i];
+            if (uMap.count(sub) && uMap[sub] != i)
+                return {i, uMap[sub]};
+            uMap[nums[i]] = i;
         }
-        return { };
-    }
-};
-
-
-/* lv 1
-class Solution {
-public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        for (int i = 0; i < nums.size() - 1; ++i) {
-            for (int j = i + 1; j < nums.size(); ++j) {
-                if ((nums[i] + nums[j]) == target) return { i, j };
+        return {};
+        
+        
+        // Hash ///////////////////////////
+        //unordered_map<int, int> uMap;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            uMap[nums[i]] = i;
+        }
+        for (int i = 0; i < nums.size(); i++)
+        {
+            sub = target - nums[i];
+            if (uMap.count(sub) && uMap[sub] != i)
+            {
+                return {i, uMap[sub]};
+            }
+        }
+        return {};
+        
+        //////////////////////////////////////
+        // O(n^2) by brute force
+        for (int i=0; i<nums.size(); i++)
+        {
+            int sub = target - nums[i];
+            for (int j= i+1; j < nums.size(); j++)
+            {
+                if (nums[j] == sub)
+                {
+                    return {i, j};
+                }
             }
         }
         return {};
     }
 };
-*/
